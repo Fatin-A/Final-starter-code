@@ -1,8 +1,16 @@
 import 'package:flutter/material.dart';
 
-class HomeScreen extends StatelessWidget {
+class HomeScreen extends StatefulWidget {
   static Route route() => MaterialPageRoute(builder: (_) => const HomeScreen());
   const HomeScreen({Key? key}) : super(key: key);
+
+  @override
+  _HomeScreen createState() => _HomeScreen();
+}
+
+class _HomeScreen extends State<HomeScreen> {
+  bool isReadmore = true;
+  // bool isVisible = false;
 
   @override
   Widget build(BuildContext context) {
@@ -57,9 +65,18 @@ class HomeScreen extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.end,
         children: [
           FloatingActionButton(
-              child: const Icon(Icons.menu),
-              tooltip: 'Show less. Hide notes content',
-              onPressed: () {}),
+              tooltip: 'Show more. Unhide notes content',
+              onPressed: () {
+                setState(() {
+                  isReadmore = !isReadmore;
+                });
+              },
+              child: Padding(
+                padding: const EdgeInsets.all(10.0),
+                child: Icon(
+                    (isReadmore == false) ? Icons.menu : Icons.unfold_less,
+                    size: 30),
+              )),
 
           /* Notes: for the "Show More" icon use: Icons.menu */
 
