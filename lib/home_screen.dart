@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
 
 class HomeScreen extends StatefulWidget {
   static Route route() => MaterialPageRoute(builder: (_) => const HomeScreen());
@@ -10,6 +11,7 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreen extends State<HomeScreen> {
   bool isReadmore = true;
+  bool click = true;
   // bool isVisible = false;
 
   @override
@@ -50,7 +52,9 @@ class _HomeScreen extends State<HomeScreen> {
                     Icons.delete,
                     color: Colors.blue,
                   ),
-                  onPressed: () {},
+                  onPressed: () {
+                    deleteDocument('noteId');
+                  },
                 ),
               ],
             ),
@@ -58,7 +62,11 @@ class _HomeScreen extends State<HomeScreen> {
           title: const Text('Note title'),
           subtitle: const Text('Note content'),
           onTap: () {},
-          onLongPress: () {},
+          onLongPress: () {
+            // setState(() {
+            //   isReadmore = !isReadmore;
+            // });
+          },
         ),
       ),
       floatingActionButton: Row(
@@ -88,5 +96,15 @@ class _HomeScreen extends State<HomeScreen> {
         ],
       ),
     );
+  }
+
+  Future<http.Response> deleteDocument(String id) async {
+    final http.Response response = await http.delete(
+      Uri.parse('https://jsonplaceholder.typicode.com/notes/$id'),
+      headers: <String, String>{
+        'title': 'application/json; charset=UTF-8',
+      },
+    );
+    return response;
   }
 }
