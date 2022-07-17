@@ -1,4 +1,7 @@
+// ignore_for_file: prefer_const_constructors
+
 import 'package:flutter/material.dart';
+import 'package:map_exam/home_screen.dart';
 
 class EditScreen extends StatefulWidget {
   static Route route() => MaterialPageRoute(builder: (_) => const EditScreen());
@@ -12,6 +15,8 @@ class EditScreen extends StatefulWidget {
 class _EditScreenState extends State<EditScreen> {
   final _titleController = TextEditingController();
   final _descriptionController = TextEditingController();
+  String content = '';
+  String title = '';
 
   @override
   Widget build(BuildContext context) {
@@ -46,7 +51,9 @@ class _EditScreenState extends State<EditScreen> {
               decoration: const InputDecoration(
                 hintText: 'Type the title here',
               ),
-              onChanged: (value) {},
+              onChanged: (value) {
+                setState(() => title = value);
+              },
             ),
             const SizedBox(
               height: 5,
@@ -61,7 +68,9 @@ class _EditScreenState extends State<EditScreen> {
                   decoration: const InputDecoration(
                     hintText: 'Type the description',
                   ),
-                  onChanged: (value) {}),
+                  onChanged: (value) {
+                    setState(() => content = value);
+                  }),
             ),
           ],
         ),
