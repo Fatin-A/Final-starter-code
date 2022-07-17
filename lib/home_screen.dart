@@ -15,7 +15,7 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreen extends State<HomeScreen> {
   bool isReadmore = true;
   bool click = true;
-  // bool isVisible = false;
+  bool isVisible = false;
 
   @override
   Widget build(BuildContext context) {
@@ -46,21 +46,29 @@ class _HomeScreen extends State<HomeScreen> {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
-                IconButton(
-                  icon: const Icon(Icons.edit, color: Colors.blue),
-                  onPressed: () {
-                    Navigator.push(context,
-                        MaterialPageRoute(builder: (context) => EditScreen()));
-                  },
-                ),
-                IconButton(
-                  icon: const Icon(
-                    Icons.delete,
-                    color: Colors.blue,
+                Visibility(
+                  visible: isVisible,
+                  child: IconButton(
+                    icon: const Icon(Icons.edit, color: Colors.blue),
+                    onPressed: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => EditScreen()));
+                    },
                   ),
-                  onPressed: () {
-                    deleteDocument('noteId');
-                  },
+                ),
+                Visibility(
+                  visible: isVisible,
+                  child: IconButton(
+                    icon: const Icon(
+                      Icons.delete,
+                      color: Colors.blue,
+                    ),
+                    onPressed: () {
+                      deleteDocument('noteId');
+                    },
+                  ),
                 ),
               ],
             ),
@@ -69,9 +77,7 @@ class _HomeScreen extends State<HomeScreen> {
           subtitle: const Text('Note content'),
           onTap: () {},
           onLongPress: () {
-            // setState(() {
-            //   isReadmore = !isReadmore;
-            // });
+            showToast();
           },
         ),
       ),
@@ -105,6 +111,12 @@ class _HomeScreen extends State<HomeScreen> {
         ],
       ),
     );
+  }
+
+  void showToast() {
+    setState(() {
+      isVisible = !isVisible;
+    });
   }
 
   Future<http.Response> deleteDocument(String id) async {
